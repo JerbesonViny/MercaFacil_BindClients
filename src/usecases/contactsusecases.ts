@@ -1,6 +1,6 @@
 import { clientVarejao } from "../data-source";
 import { IRequestContacts } from "../entity/main";
-import { Contacts } from "../database/varejao/Contacts";
+import { VarejaoContacts } from "../entity/Contact";
 
 export class ContactsUseCases {
     async create({ contacts }: IRequestContacts) {
@@ -8,7 +8,7 @@ export class ContactsUseCases {
             
             var ids = await clientVarejao.createQueryBuilder()
                 .insert()
-                .into(Contacts)
+                .into(VarejaoContacts)
                 .values(contacts)
                 .execute();
 
@@ -25,7 +25,7 @@ export class ContactsUseCases {
     async getAll() {
         const result = clientVarejao.initialize().then(async () => {
             
-            var contacts = await clientVarejao.manager.find(Contacts)
+            var contacts = await clientVarejao.manager.find(VarejaoContacts)
 
             clientVarejao.destroy();
 

@@ -1,8 +1,7 @@
 import "reflect-metadata";
 import * as dotenv from "dotenv";
 import { DataSource } from "typeorm";
-import { Contacts } from "./database/varejao/Contacts";
-import macapaSchemas from "./database/macapa/schemas"
+import { MacapaContacts, VarejaoContacts } from "./entity/Contact";
 
 dotenv.config();
 
@@ -15,7 +14,7 @@ export const clientVarejao = new DataSource({
     database: process.env.POSTGRES_DATABASE,
     synchronize: true,
     logging: false,
-    entities: [Contacts],
+    entities: [VarejaoContacts],
     migrations: [],
     subscribers: []
 });
@@ -29,6 +28,6 @@ export const clientMacapa = new DataSource({
     database: process.env.MYSQL_DATABASE,
     synchronize: true,
     logging: true,
-    entities: [macapaSchemas.Contacts],
+    entities: [MacapaContacts],
     migrations: []
 })

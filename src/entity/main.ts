@@ -6,3 +6,8 @@ export interface Contact {
 export interface IRequestContacts {
     contacts: Contact[]
 }
+
+export interface Payload {
+    id: number;
+    type_client: number;
+}
