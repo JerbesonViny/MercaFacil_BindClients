@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
@@ -7,10 +7,10 @@ export class Contacts {
     id: number
 
     @Column({length: 100, nullable: false})
-    nome: string
+    name: string
 
     @Column({length: 13, nullable: false})
-    celular: string
+    cellphone: string
 }
 
 export default { Contacts }
