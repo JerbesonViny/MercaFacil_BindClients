@@ -5,11 +5,18 @@
   "author": "Jerbeson Vinycius Sousa Rodrigues",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.1"
+    "@types/node": "^17.0.39",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mysql": "^2.18.1",
+    "pg": "^8.7.3",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.6"
   },
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "createdb": "ts-node-dev src/index.ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
