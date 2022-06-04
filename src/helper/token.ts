@@ -3,7 +3,7 @@ import { Payload } from "../entity/main";
 
 function generateToken(payload: Payload) {
     try {
-        var token = sign(payload, 'secret', { expiresIn: '20s' })
+        var token = sign(payload, 'secret', { expiresIn: '15m' })
     
         return token
     } catch (error) {

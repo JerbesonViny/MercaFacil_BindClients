@@ -1,11 +1,14 @@
+// Libs
 import "reflect-metadata";
 import "express-async-errors";
 import * as dotenv from "dotenv";
 import express from "express";
 
+// project files
 import { router } from "./routes";
 import { errorHandling } from "./middlewares/main";
 
+// load all env variables
 dotenv.config();
 
 const app = express();

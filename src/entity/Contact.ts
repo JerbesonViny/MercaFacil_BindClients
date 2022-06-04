@@ -21,6 +21,6 @@ export class MacapaContacts {
     @Column({length: 100, nullable: false})
     name: string
 
-    @Column({length: 13, nullable: false})
+    @Column({length: 20, nullable: false})
     cellphone: string
 }

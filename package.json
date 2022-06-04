@@ -1,7 +1,7 @@
 {
   "name": "bindclients",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "src/server.ts",
   "author": "Jerbeson Vinycius Sousa Rodrigues",
   "license": "MIT",
   "dependencies": {

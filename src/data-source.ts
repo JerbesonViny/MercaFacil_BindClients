@@ -27,7 +27,7 @@ export const clientMacapa = new DataSource({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: [MacapaContacts],
     migrations: []
 })
