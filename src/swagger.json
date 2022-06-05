@@ -1,0 +1,177 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bind Clients",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Jerbeson Vinycius",
+      "email": "jerbesonvinycius@gmail.com"
+    }
+  },
+  "servers": [{"url": "http://localhost:8000", "description": "Development Server"}],
+  "components": {
+    "responses": {
+      "Token": {
+        "description": "Unauthorized",
+        "content": {
+          "Required Token": {
+            "example": {
+              "error": "Token is required"
+            }
+          },
+          "Expired Token": {
+            "example": {
+              "error": "Token invalid"
+            }
+          }
+        }
+      },
+      "CannotCreate": {
+        "description": "Internal Server Error",
+        "content": {
+          "Internal Server Error": {
+            "example": {
+              "error": "Cannot create a new contact"
+            }
+          }
+        }
+      },
+      "CannotGetAll": {
+        "description": "Internal Server Error",
+        "content": {
+          "Internal Server Error": {
+            "example": {
+              "error": "Cannot get all contacts"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Contacts",
+      "description": "Rotas referentes ao modelo de contatos"
+    }
+  ],
+  "paths": {
+    "/contacts": {
+      "get": {
+        "summary": "Essa rota retorna todos os contatos cadastrados pelo usuário autenticado.",
+        "description": "Essa rota exige que o cliente passe o seu token no Authorization. Caso não venha a fornecer o que se é exigido, o servidor retornará uma mensagem informando-o que esperava um token e o mesmo não foi encontrado.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Contacts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "Macapá": {
+                "example": {
+                  "contacts": [
+                    {
+                      "name": "EXAMPLE",
+                      "cellphone": "+55 (84) 012345-6789"
+                    }
+                  ]
+                }
+              },
+              "Varejão": {
+                "example": {
+                  "contacts": [
+                    {
+                      "name": "Example",
+                      "cellphone": "55840123456789"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Token"
+          },
+          "500": {
+            "$ref": "#/components/responses/CannotGetAll"
+          }
+        }
+      },
+      "post": {
+        "summary": "Essa rota permite que o usuário autenticado cadastre novos contatos em sua lista de contatos.",
+        "description": "Essa rota exige que o cliente passe o seu token no Authorization. Caso não venha a fornecer o que se é exigido, o servidor retornará uma mensagem informando-o que esperava um token e o mesmo não foi encontrado.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contacts": {
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "Example"
+                        },
+                        "cellphone": {
+                          "type": "string",
+                          "example": "55840123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Contacts"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "Created": {
+                "example": {
+                  "ids": [
+                    {
+                      "id": 1
+                    },
+                    {
+                      "id": 2
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Token"
+          },
+          "500": {
+            "$ref": "#/components/responses/CannotGetAll"
+          }
+        }
+      }
+    }
+  }
+}

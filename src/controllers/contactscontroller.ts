@@ -20,13 +20,13 @@ export class ContactsController {
                 listContact.contacts = await contactHandle(listContact.contacts);
             }
         } catch (error) {
-            throw new HttpException(400, "Token invalid");
+            throw new HttpException(401, "Token invalid");
         }
 
         try {
             var result = await connection.create(listContact);
         } catch (error) {
-            throw new HttpException(400, "Cannot create a new contact");
+            throw new HttpException(500, "Cannot create a new contact");
         }
 
         return res.status(201).json(result["identifiers"]);
@@ -39,15 +39,15 @@ export class ContactsController {
             const datasource = getConnectionByClient(token);
             var connection = new ContactsUseCases(datasource.client);
         } catch (error) {
-            throw new HttpException(400, "Token invalid");
+            throw new HttpException(401, "Token invalid");
         }
 
         try {
             var result = await connection.getAll();
         } catch (error) {
-            throw new HttpException(400, "Cannot create a new contact");
+            throw new HttpException(500, "Cannot get all contacts");
         }
 
-        return res.status(201).json({"contacts": result})
+        return res.status(200).json({"contacts": result})
     }
 };

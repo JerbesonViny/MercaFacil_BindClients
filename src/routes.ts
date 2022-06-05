@@ -17,7 +17,7 @@ router.get("/", (req: Request, res: Response) => {
 
 // Contacts
 router.get("/contacts/", tokenRequired, new ContactsController().all);
-router.post("/contacts/create/", tokenRequired, new ContactsController().create);
+router.post("/contacts/", tokenRequired, new ContactsController().create);
 
 // Token
 router.post("/token", (req: Request, res: Response) => {

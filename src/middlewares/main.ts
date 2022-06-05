@@ -12,6 +12,6 @@ export function tokenRequired(request: Request, response: Response, next: NextFu
         
         next()
     } catch (error) {
-        throw new HttpException(400, "Token is required")
+        throw new HttpException(401, "Token is required")
     }
 }
