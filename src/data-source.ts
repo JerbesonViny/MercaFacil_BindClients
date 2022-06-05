@@ -7,7 +7,7 @@ dotenv.config();
 
 export const clientVarejao = new DataSource({
     type: "postgres",
-    host: process.env.DATABASE_HOST,
+    host: process.env.DATABASE_HOST_POSTGRES,
     port: Number(process.env.POSTGRES_PORT),
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
@@ -21,7 +21,7 @@ export const clientVarejao = new DataSource({
 
 export const clientMacapa = new DataSource({
     type: "mysql",
-    host: process.env.DATABASE_HOST,
+    host: process.env.DATABASE_HOST_MYSQL,
     port: Number(process.env.MYSQL_PORT),
     username: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,

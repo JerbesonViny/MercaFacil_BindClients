@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import { DataSource } from "typeorm";
 import { clientVarejao, clientMacapa } from "./data-source";
 
 

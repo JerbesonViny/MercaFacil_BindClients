@@ -1,5 +1,5 @@
 import "express-async-errors";
-import {Router, Request, Response} from 'express';
+import { Router, Request, Response } from 'express';
 
 import { Payload } from './entity/main';
 import { HttpException } from './helper/httperrors';
@@ -10,7 +10,9 @@ import { ContactsController } from './controllers/contactscontroller';
 export const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
-    throw new HttpException(401, "Unauthorized");
+    res.json({
+        "env": "nice"
+    })
 });
 
 // Contacts
