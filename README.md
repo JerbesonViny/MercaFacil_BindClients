@@ -31,7 +31,19 @@ docker-compose up
 > <div style="text-align: justify;">Observação: Muito provavelmente você visualizará em seu terminal alguns processos sendo executados e downloads sendo feitos. Isso ocorre pois muito possivelmente você ainda não contém as "imagens" docker que são necessárias para iniciar a aplicação, porém, o docker cuidará de fazer o download das mesmas, criar a imagem customizada do projeto e também iniciará os containers que possuem individualmente o PostgresSQL, MySQL e o app rodando.</div>
 
 <br/>
+
 Por fim, basta acessar a rota <a href="http://localhost:8000/docs">http://localhost:8000/docs</a> para ter acesso a documentação da API, podendo também testar a mesma através dessa documentação.
+
+<div style="text-align: justify">
+
+> **OBSERVAÇÃO**: Caso venha a acessar a rota anteriormente citada, o token obtido na rota /token deverá ser passado clicando primeiramente no botão **Authorize**, em seguida, cole no campo **Value** o token que foi retornado.
+</div>
+
+<br/>
+
+<div style="display: flex; justify-content: center;">
+<img style="height: 50px" src="https://drive.google.com/uc?export=view&id=1d2wzPbvOkiH47EfFbcBb-3yXCvxrpoOb"/>
+</div>
 
 <br/>
 
@@ -43,11 +55,11 @@ O fluxo da aplicação pode ser entendido através dos passos descritos abaixo, 
 
 ### 1. O cliente faz uma requisição a API.
 
-### 2. A aplicação que conta com alguns middlewares, nesse caso, o que estará atuando será o **RequiredToken** que verifica a presença do token (JWT - Json Web Token) que foi passado através do header Authorization (Bearer Token).
+### 2. A aplicação que conta com alguns middlewares, nesse caso, o que estará atuando será o **RequiredToken** que verifica a presença do token (JWT - Json Web Token) que foi passado através do header Authorization (Bearer Token) e também a validade do mesmo.
 
 ### 3. Caso o token enviado esteja válido, o usuário poderá então desfrutar das funcionalidades. Porém, caso contrário, o mesmo terá o acesso negado e terá em sua tela a mensagem de erro informando-o que o mesmo passou um token inválido e/ou expirado.
 
-### 4. Acionada a rota de criação de novos contatos, o usuário deverá passar um JSON (Javascript Object Notation) no corpo da requisição seguindo o modelo que foi estabelecido. Além disso, ainda tem-se a necessidade do envio do token novamente através do header Authorization (O mesmo se repete nas outras rotas de contato).
+### 4. Acionada a rota de criação de novos contatos, o usuário deverá passar um JSON (Javascript Object Notation) no corpo da requisição seguindo o modelo que foi estabelecido. Além disso, ainda tem-se a necessidade do envio do token novamente através do header a uthorization (O mesmo se repete nas outras rotas de contato).
 </div>
 
 > Modelo do corpo da requisição

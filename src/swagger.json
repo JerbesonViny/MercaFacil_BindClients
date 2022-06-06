@@ -229,7 +229,7 @@
         ],
         "requestBody": {
           "content": {
-            "Varejão": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -239,24 +239,74 @@
                   }
                 }
               }
-            },
-            "Macapá": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "client_uuid": {
-                    "type": "string",
-                    "example": "f5a0ef727c6c4c5e8bdc3c5d36d09198"
-                  }
-                }
-              }
             }
           },
           "required": true
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfdXVpZCI6IjVmOWI1MjdiOGFmYjQ2MDM4Zjk4MTBmODZkYTE5NTg3IiwiaWF0IjoxNjU0NDk4OTE2LCJleHAiOjE2NTQ0OTk4MTZ9.ZOENKHoDyMdxA5S2b4uGO9iKV5fMweWJ7QOMYGSD3JM"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "This client does not exists"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Not found client_uuid in the request body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Error on try create a jwt"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

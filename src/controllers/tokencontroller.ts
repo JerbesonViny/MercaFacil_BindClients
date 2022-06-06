@@ -34,7 +34,7 @@ export class TokenController {
         try {
             const decodedToken = verifyToken(token);
     
-            res.json({"decodedToken": decodedToken});
+            res.status(200).json({"decodedToken": decodedToken});
         } catch (error) {
             throw new HttpException(401, "Invalid Token");
         };
