@@ -1,7 +1,5 @@
 import { DataSource } from "typeorm";
-import { clientVarejao } from "../data-source";
 import { IRequestContacts } from "../entity/main";
-import { VarejaoContacts } from "../entity/Contact";
 
 export class ContactsUseCases {
     datasource: DataSource;
@@ -24,7 +22,7 @@ export class ContactsUseCases {
 
             return ids
 
-        }).catch((err) => { console.log(err); throw new Error('Error on insert data')})
+        }).catch((err) => {throw new Error('Error on insert contacts in database')})
 
         return result
     }
@@ -42,7 +40,7 @@ export class ContactsUseCases {
 
             return contacts
 
-        }).catch(error => console.log(error))
+        }).catch(error => {throw new Error('Error on select all contacts')})
 
         return result
     }

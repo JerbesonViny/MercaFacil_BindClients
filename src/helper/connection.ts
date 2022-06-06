@@ -1,8 +1,6 @@
-import { Jwt } from "jsonwebtoken";
-import { clientMacapa, clientVarejao } from "../data-source";
-import { Payload } from "../entity/main";
-import { ContactsUseCases } from "../usecases/contactsusecases";
 import { verifyToken } from "./token";
+import { Payload } from "../entity/main";
+import { clientMacapa, clientVarejao } from "../data-source";
 
 
 export function getConnectionByClient(token) {

@@ -4,8 +4,8 @@ import { IRequestContacts } from "../entity/main";
 import { HttpException } from "../helper/httperrors";
 import { contactHandle } from "../helper/datamanipulate";
 
-import { ContactsUseCases } from "../usecases/contactsusecases";
 import { getConnectionByClient } from "../helper/connection";
+import { ContactsUseCases } from "../usecases/contactsusecases";
 
 export class ContactsController {
     async create(req: Request, res: Response) {
@@ -13,6 +13,10 @@ export class ContactsController {
         const listContact = <IRequestContacts>req.body;
 
         try {
+            /** Pegando a conexao com o banco a partir do cliente
+             * Varejao - PostgreSQL
+             * Macapa - MySQL
+             */
             var datasource = getConnectionByClient(token);
             var connection = new ContactsUseCases(datasource.client);
         } catch (error) {
@@ -20,7 +24,9 @@ export class ContactsController {
         }
 
         try {
+            // Verificando se o cliente autenticado eh macapa
             if( datasource.client_uuid == process.env.CLIENT_MACAPA_KEY ) {
+                // Aplicando a regra de negocio do cliente macapa
                 listContact.contacts = await contactHandle(listContact.contacts);
             }
 

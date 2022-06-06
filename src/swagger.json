@@ -8,7 +8,12 @@
       "email": "jerbesonvinycius@gmail.com"
     }
   },
-  "servers": [{"url": "http://localhost:8000", "description": "Development Server"}],
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Development Server"
+    }
+  ],
   "components": {
     "responses": {
       "Token": {
@@ -59,6 +64,10 @@
     {
       "name": "Contacts",
       "description": "Rotas referentes ao modelo de contatos"
+    },
+    {
+      "name": "Token",
+      "description": "Rotas referentes ao modelo de Token"
     }
   ],
   "paths": {
@@ -169,6 +178,85 @@
           },
           "500": {
             "$ref": "#/components/responses/CannotGetAll"
+          }
+        }
+      }
+    },
+    "/token": {
+      "get": {
+        "summary": "Essa rota decodifica o token do usuário e mostra as informações nele contidas.",
+        "description": "Essa rota exige que o cliente passe o seu token no authorization. Caso não venha a fornecer o que se é exigido, o servidor retornará uma mensagem informando-o que esperava um token e o mesmo não foi encontrado. Além disso, é válido informar que essa rota foi criada apenas para teste e não continuará a existir no ambiente de produção.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Token"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "OK": {
+                "example": {
+                  "decodedToken": {
+                    "client_uuid": "5f9b527b8afb46038f9810f86da19587",
+                    "iat": 1654494713,
+                    "exp": 1654495613
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "Unauthorized": {
+                "example": {
+                  "error": "Invalid Token"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Essa rota permite a obtenção do token que será utilizado ao pressionar o botão Authorize e colar o token dentro.",
+        "description": "",
+        "tags": [
+          "Token"
+        ],
+        "requestBody": {
+          "content": {
+            "Varejão": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "client_uuid": {
+                    "type": "object",
+                    "example": "5f9b527b8afb46038f9810f86da19587"
+                  }
+                }
+              }
+            },
+            "Macapá": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "client_uuid": {
+                    "type": "string",
+                    "example": "f5a0ef727c6c4c5e8bdc3c5d36d09198"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
