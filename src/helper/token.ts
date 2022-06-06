@@ -3,22 +3,22 @@ import { Payload } from "../entity/main";
 
 function generateToken(payload: Payload) {
     try {
-        var token = sign(payload, 'secret', { expiresIn: '15m' })
+        var token = sign(payload, 'secret', { expiresIn: '15m' });
     
-        return token
+        return token;
     } catch (error) {
-        console.log(error)
-    }
-}
+        throw new Error("Error on try create a token");
+    };
+};
 
 function verifyToken(token) {
     try {
-        var decodedToken = verify(token, 'secret')
+        var decodedToken = verify(token, 'secret');
 
-        return decodedToken
+        return decodedToken;
     } catch (error) {
-        throw new Error("Token invalid")
-    }
-}
+        throw new Error("Invalid Token");
+    };
+};
 
-export { generateToken, verifyToken }
+export { generateToken, verifyToken };

@@ -6,6 +6,7 @@ import { HttpException } from './helper/httperrors';
 import { tokenRequired } from "./middlewares/main";
 import { generateToken, verifyToken } from "./helper/token";
 import { ContactsController } from './controllers/contactscontroller';
+import { validClientUuid } from "./helper/connection";
 
 export const router = Router();
 
@@ -20,8 +21,17 @@ router.get("/contacts/", tokenRequired, new ContactsController().all);
 router.post("/contacts/", tokenRequired, new ContactsController().create);
 
 // Token
-router.post("/token", (req: Request, res: Response) => {
+router.post("/token/", (req: Request, res: Response) => {
     const payload = <Payload>req.body;
+
+    // Verificando a presenca do client_uuid no corpo da requisicao
+    if(!payload.client_uuid) {
+        throw new HttpException(422, 'Not found client_uuid in the request body');
+    };
+
+    if(!validClientUuid(payload.client_uuid)) {
+        throw new HttpException(401, "This client does not exists");
+    }
 
     try {
         const token = generateToken(payload);
@@ -40,6 +50,6 @@ router.get("/decode-token/", tokenRequired, (req: Request, res: Response) => {
 
         res.json({"token": token, "decodedToken": decodedToken});
     } catch (error) {
-        throw new HttpException(400, "");
+        throw new HttpException(401, "Invalid Token");
     };
 });

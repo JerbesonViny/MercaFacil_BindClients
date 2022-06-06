@@ -15,21 +15,21 @@ export class ContactsController {
         try {
             var datasource = getConnectionByClient(token);
             var connection = new ContactsUseCases(datasource.client);
-
-            if( datasource.type_client == 2 ) {
-                listContact.contacts = await contactHandle(listContact.contacts);
-            }
         } catch (error) {
-            throw new HttpException(401, "Token invalid");
+            throw new HttpException(401, "Invalid Token");
         }
 
         try {
+            if( datasource.client_uuid == process.env.CLIENT_MACAPA_KEY ) {
+                listContact.contacts = await contactHandle(listContact.contacts);
+            }
+
             var result = await connection.create(listContact);
         } catch (error) {
             throw new HttpException(500, "Cannot create a new contact");
         }
 
-        return res.status(201).json(result["identifiers"]);
+        res.status(201).json(result["identifiers"]);
     }
 
     async all(req: Request, res: Response) {
@@ -39,7 +39,7 @@ export class ContactsController {
             const datasource = getConnectionByClient(token);
             var connection = new ContactsUseCases(datasource.client);
         } catch (error) {
-            throw new HttpException(401, "Token invalid");
+            throw new HttpException(401, "Invalid Token");
         }
 
         try {
@@ -48,6 +48,6 @@ export class ContactsController {
             throw new HttpException(500, "Cannot get all contacts");
         }
 
-        return res.status(200).json({"contacts": result})
+        res.status(200).json({"contacts": result});
     }
 };

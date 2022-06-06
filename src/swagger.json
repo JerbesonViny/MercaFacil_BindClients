@@ -21,7 +21,7 @@
           },
           "Expired Token": {
             "example": {
-              "error": "Token invalid"
+              "error": "Invalid Token"
             }
           }
         }

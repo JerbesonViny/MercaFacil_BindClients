@@ -1,13 +1,12 @@
 export interface Contact {
     name: string;
     cellphone: string;
-}
+};
 
 export interface IRequestContacts {
-    contacts: Contact[]
+    contacts: Contact[];
 }
 
 export interface Payload {
-    id: number;
-    type_client: number;
-}
+    client_uuid: string;
+};
