@@ -7,7 +7,7 @@ COPY package*.json ./
 COPY yarn.lock ./
 
 # Install deps
-RUN yarn install
+RUN yarn
 
 # Copy source
 COPY src ./src
