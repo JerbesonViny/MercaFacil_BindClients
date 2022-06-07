@@ -1,0 +1,315 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bind Clients",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Jerbeson Vinycius",
+      "email": "jerbesonvinycius@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Development Server"
+    }
+  ],
+  "components": {
+    "responses": {
+      "Token": {
+        "description": "Unauthorized",
+        "content": {
+          "Required Token": {
+            "example": {
+              "error": "Token is required"
+            }
+          },
+          "Expired Token": {
+            "example": {
+              "error": "Invalid Token"
+            }
+          }
+        }
+      },
+      "CannotCreate": {
+        "description": "Internal Server Error",
+        "content": {
+          "Internal Server Error": {
+            "example": {
+              "error": "Cannot create a new contact"
+            }
+          }
+        }
+      },
+      "CannotGetAll": {
+        "description": "Internal Server Error",
+        "content": {
+          "Internal Server Error": {
+            "example": {
+              "error": "Cannot get all contacts"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Contacts",
+      "description": "Rotas referentes ao modelo de contatos"
+    },
+    {
+      "name": "Token",
+      "description": "Rotas referentes ao modelo de Token"
+    }
+  ],
+  "paths": {
+    "/contacts": {
+      "get": {
+        "summary": "Essa rota retorna todos os contatos cadastrados pelo usuário autenticado.",
+        "description": "Essa rota exige que o cliente passe o seu token no Authorization. Caso não venha a fornecer o que se é exigido, o servidor retornará uma mensagem informando-o que esperava um token e o mesmo não foi encontrado.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Contacts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "Macapá": {
+                "example": {
+                  "contacts": [
+                    {
+                      "name": "EXAMPLE",
+                      "cellphone": "+55 (84) 012345-6789"
+                    }
+                  ]
+                }
+              },
+              "Varejão": {
+                "example": {
+                  "contacts": [
+                    {
+                      "name": "Example",
+                      "cellphone": "55840123456789"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Token"
+          },
+          "500": {
+            "$ref": "#/components/responses/CannotGetAll"
+          }
+        }
+      },
+      "post": {
+        "summary": "Essa rota permite que o usuário autenticado cadastre novos contatos em sua lista de contatos.",
+        "description": "Essa rota exige que o cliente passe o seu token no Authorization. Caso não venha a fornecer o que se é exigido, o servidor retornará uma mensagem informando-o que esperava um token e o mesmo não foi encontrado.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contacts": {
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "Example"
+                        },
+                        "cellphone": {
+                          "type": "string",
+                          "example": "55840123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Contacts"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "Created": {
+                "example": {
+                  "ids": [
+                    {
+                      "id": 1
+                    },
+                    {
+                      "id": 2
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Token"
+          },
+          "500": {
+            "$ref": "#/components/responses/CannotGetAll"
+          }
+        }
+      }
+    },
+    "/token": {
+      "get": {
+        "summary": "Essa rota decodifica o token do usuário e mostra as informações nele contidas.",
+        "description": "Essa rota exige que o cliente passe o seu token no authorization. Caso não venha a fornecer o que se é exigido, o servidor retornará uma mensagem informando-o que esperava um token e o mesmo não foi encontrado. Além disso, é válido informar que essa rota foi criada apenas para teste e não continuará a existir no ambiente de produção.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Token"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "OK": {
+                "example": {
+                  "decodedToken": {
+                    "client_uuid": "5f9b527b8afb46038f9810f86da19587",
+                    "iat": 1654494713,
+                    "exp": 1654495613
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "Unauthorized": {
+                "example": {
+                  "error": "Invalid Token"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Essa rota permite a obtenção do token que será utilizado ao pressionar o botão Authorize e colar o token dentro.",
+        "description": "",
+        "tags": [
+          "Token"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "client_uuid": {
+                    "type": "object",
+                    "example": "5f9b527b8afb46038f9810f86da19587"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfdXVpZCI6IjVmOWI1MjdiOGFmYjQ2MDM4Zjk4MTBmODZkYTE5NTg3IiwiaWF0IjoxNjU0NDk4OTE2LCJleHAiOjE2NTQ0OTk4MTZ9.ZOENKHoDyMdxA5S2b4uGO9iKV5fMweWJ7QOMYGSD3JM"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "This client does not exists"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Not found client_uuid in the request body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Error on try create a jwt"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
