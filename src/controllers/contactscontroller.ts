@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { IRequestContacts } from "../entity/main";
 import { HttpException } from "../helper/httperrors";
-import { contactHandle } from "../helper/datamanipulate";
+import { contactHandle, validateCellphone } from "../helper/datamanipulate";
 
 import { getConnectionByClient } from "../helper/connection";
 import { ContactsUseCases } from "../usecases/contactsusecases";
@@ -24,6 +24,9 @@ export class ContactsController {
         }
 
         try {
+            // Captando os contatos validos
+            listContact.contacts = await validateCellphone(listContact.contacts);
+
             // Verificando se o cliente autenticado eh macapa
             if( datasource.client_uuid == process.env.CLIENT_MACAPA_KEY ) {
                 // Aplicando a regra de negocio do cliente macapa
