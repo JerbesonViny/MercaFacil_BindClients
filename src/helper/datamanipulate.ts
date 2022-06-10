@@ -9,3 +9,17 @@ export function contactHandle(contacts: Contact[]) {
 
     return contacts;
 };
+
+// Funcao que valida os contatos passados
+export function validateCellphone(contacts: Contact[]) {
+    var validContacts = [];
+
+    for ( let index in contacts ) {
+        if( contacts[index].cellphone.length == 13 ) {
+            validContacts.push({name: contacts[index].name, cellphone: contacts[index].cellphone});
+        };
+    };
+
+    return validContacts;
+};
+

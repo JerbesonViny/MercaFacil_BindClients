@@ -136,7 +136,7 @@
                         },
                         "cellphone": {
                           "type": "string",
-                          "example": "55840123456789"
+                          "example": "5584012345678"
                         }
                       }
                     }
